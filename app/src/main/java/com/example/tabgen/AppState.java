@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.annotation.IntDef;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.ObservableField;
 
 import java.lang.annotation.Retention;
 
