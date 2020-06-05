@@ -42,7 +42,7 @@ public class AppState extends BaseObservable {
             return false;
         }
         setState(RECORDING);
-        Log.i(TAG, "Set AppState to Recording");
+        Log.d(TAG, "Set AppState to Recording");
         return true;
     }
 
@@ -52,7 +52,7 @@ public class AppState extends BaseObservable {
             return false;
         }
         setState(READY);
-        Log.i(TAG, "Set Appstate to Ready");
+        Log.d(TAG, "Set Appstate to Ready");
         return true;
     }
 

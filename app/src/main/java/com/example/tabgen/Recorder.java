@@ -1,22 +1,20 @@
 package com.example.tabgen;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class Recorder {
     private static final String TAG = "Recorder";
-    private AppState mAppState;
+    private AppState appState;
 
     @Inject
-    Recorder(AppState appState) {
-        mAppState = appState;
+    Recorder(AppState mAppState) {
+        appState = mAppState;
     }
 
     public void toggle() {
-        if (mAppState.isReady()) {
+        if (appState.isReady()) {
             startRecording();
             return;
         }
@@ -24,11 +22,11 @@ public class Recorder {
     }
 
     private void startRecording() {
-        mAppState.setRecording();
+        appState.setRecording();
     }
 
     private void stopRecording() {
-        mAppState.setReady();
+        appState.setReady();
     }
 
 }

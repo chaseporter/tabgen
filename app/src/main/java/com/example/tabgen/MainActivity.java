@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     @Inject
     AppState appState;
-
     @Inject
     Recorder recorder;
 
@@ -23,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppComponent appComponent = DaggerAppComponent.create();
+        appComponent.inject(this);
         binding.setState(appState);
         binding.setRecorder(recorder);
-        Log.d(TAG, "onCreate: " + Boolean.toString(appState.isReady()));
     }
 }
