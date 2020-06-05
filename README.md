@@ -14,8 +14,8 @@ to implement recording a file, saving the recording, and displaying all recordin
 For file organization would like an option to start new projects where all recordings belonging to a certain project would exist. 
 
 ## Future Feature List
-Multi Tracking and then assembling multiple tracks into a single audio file\n
-Metronome \n
-noise cancelling \n
-effect adding \n
+Multi Tracking and then assembling multiple tracks into a single audio file  
+Metronome  
+noise cancelling  
+effect adding  
 
