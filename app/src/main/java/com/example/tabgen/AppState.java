@@ -36,24 +36,20 @@ public class AppState extends BaseObservable {
         notifyPropertyChanged(BR.appState);
     }
 
-    boolean setRecording() {
+    void setRecording() throws IllegalStateException {
         if (appState != READY) {
-            Log.e(TAG, "App must be READY before starting to record");
-            return false;
+            throw new IllegalStateException("App must be READY to set its state to RECORDING");
         }
         setState(RECORDING);
         Log.d(TAG, "Set AppState to Recording");
-        return true;
     }
 
-    boolean setReady() {
+    void setReady() throws IllegalStateException {
         if (appState != RECORDING) {
-            Log.e(TAG, "App must be RECORDING to set its state to READY");
-            return false;
+            throw new IllegalStateException("App must be RECORDING to set its state to READY");
         }
         setState(READY);
         Log.d(TAG, "Set Appstate to Ready");
-        return true;
     }
 
     @Bindable
