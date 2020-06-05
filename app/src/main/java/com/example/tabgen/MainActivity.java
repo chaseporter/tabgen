@@ -18,12 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         AppComponent appComponent = DaggerAppComponent.create();
         appComponent.inject(this);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setState(appState);
         binding.setRecorder(recorder);
+        super.onCreate(savedInstanceState);
     }
 }

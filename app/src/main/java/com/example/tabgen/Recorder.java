@@ -14,11 +14,8 @@ public class Recorder {
     }
 
     public void toggle() {
-        if (appState.isReady()) {
-            startRecording();
-            return;
-        }
-        stopRecording();
+        if (appState.isReady()) startRecording();
+        else stopRecording();
     }
 
     private void startRecording() {

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.IntDef;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.ObservableField;
 
 import java.lang.annotation.Retention;
 
@@ -28,12 +29,11 @@ public class AppState extends BaseObservable {
 
     @Inject
     AppState() {
-
     }
 
     private void setState(@State int mode) {
         appState = mode;
-        notifyPropertyChanged(BR.appState);
+        notifyPropertyChanged(BR.ready);
     }
 
     void setRecording() throws IllegalStateException {
@@ -41,7 +41,7 @@ public class AppState extends BaseObservable {
             throw new IllegalStateException("App must be READY to set its state to RECORDING");
         }
         setState(RECORDING);
-        Log.d(TAG, "Set AppState to Recording");
+        Log.d(TAG, "Set state to RECORDING");
     }
 
     void setReady() throws IllegalStateException {
@@ -49,7 +49,7 @@ public class AppState extends BaseObservable {
             throw new IllegalStateException("App must be RECORDING to set its state to READY");
         }
         setState(READY);
-        Log.d(TAG, "Set Appstate to Ready");
+        Log.d(TAG, "Set state to READY");
     }
 
     @Bindable
