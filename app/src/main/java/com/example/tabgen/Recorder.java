@@ -13,16 +13,11 @@ public class Recorder {
         appState = mAppState;
     }
 
-    public void toggle() {
-        if (appState.isReady()) startRecording();
-        else stopRecording();
-    }
-
-    private void startRecording() {
+    public void startRecording() {
         appState.setRecording();
     }
 
-    private void stopRecording() {
+    public void stopRecording() {
         appState.setReady();
     }
 
