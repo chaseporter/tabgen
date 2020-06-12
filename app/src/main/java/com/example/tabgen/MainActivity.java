@@ -11,6 +11,8 @@ import android.view.View;
 import com.example.tabgen.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,18 +35,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (appState.isReady()) {
-                    if (checkPermissions())
-                        recorder.startRecording();
-                } else {
+                    if (checkPermissions()) {
+                        recorder.startRecording(getExternalCacheDir().getAbsolutePath() + File.separator + "audiorecordTest.3gp");
+                    }
+                } else if (appState.isRecording()) {
                     recorder.stopRecording();
                 }
             }
-        });;
+        });
     }
 
     boolean checkPermissions() {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+            return false;
+        }
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             return false;
         }
         return true;
