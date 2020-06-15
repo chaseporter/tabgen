@@ -13,6 +13,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
 
+/**
+ * For now this is the only ActivityFragment that I will have. For the basics of the app just need a
+ * record/stop button and a listView to show recordings. Later on, as features expand out, will need
+ * to add more Fragments for tasks that involve signal processing.
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     @Inject
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /* Function to check permissions and ask for them if needed. Needs RECORD_AUDIO and WRITE_EXTERNAL_STORAGE permission */
     boolean checkPermissions() {
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED ||
                 checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
