@@ -3,6 +3,7 @@ package com.example.tabgen;
 import android.media.MediaRecorder;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.BlockingDeque;
 
@@ -13,19 +14,18 @@ import javax.inject.Singleton;
 public class Recorder {
     private static final String TAG = "Recorder";
     private AppState appState;
+    private String storageDirectory;
     private MediaRecorder mediaRecorder;
 
     @Inject
-    Recorder(AppState mAppState) {
-        appState = mAppState;
+    Recorder(AppState appState, String storageDirectory ) {
+        this.appState = appState;
+        this.storageDirectory = storageDirectory;
     }
 
-    public void playRecording(String filePath) {
-        appState.setPlaying();
-    }
-
-    public void startRecording(String filePath) {
+    public void startRecording() {
         appState.setStarting();
+        String filePath = storageDirectory + File.separator + "audiorecordTest.3gp";
         Log.d(TAG, "startRecording: recording to " + filePath);
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);

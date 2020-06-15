@@ -11,8 +11,6 @@ import android.view.View;
 import com.example.tabgen.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
-
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = DaggerAppComponent.create();
+        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule(getExternalFilesDir(null).getAbsolutePath())).build();
         appComponent.inject(this);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setState(appState);
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (appState.isReady()) {
                     if (checkPermissions()) {
-                        recorder.startRecording(getExternalCacheDir().getAbsolutePath() + File.separator + "audiorecordTest.3gp");
+                        recorder.startRecording();
                     }
                 } else if (appState.isRecording()) {
                     recorder.stopRecording();
