@@ -5,6 +5,8 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,8 +34,11 @@ public class Recorder {
     * starts recording, and sets AppState to RECORDING. */
     public void startRecording() {
         appState.setStarting();
-        String filePath = storageDirectory + File.separator + "audiorecordTest.3gp";
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String timeStamp = s.format(new Date());
+        String filePath = storageDirectory + File.separator + timeStamp + ".3gp";
         Log.d(TAG, "startRecording: recording to " + filePath);
+
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
