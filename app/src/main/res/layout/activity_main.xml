@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView"
             app:tint="@android:color/white" />
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recordingList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
