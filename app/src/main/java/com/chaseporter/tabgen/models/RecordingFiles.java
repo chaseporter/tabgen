@@ -1,4 +1,4 @@
-package com.chaseporter.tabgen;
+package com.chaseporter.tabgen.models;
 
 
 import android.util.Log;

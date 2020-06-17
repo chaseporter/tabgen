@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.chaseporter.tabgen.models.AppState;
+import com.chaseporter.tabgen.models.Recorder;
 import com.chaseporter.tabgen.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

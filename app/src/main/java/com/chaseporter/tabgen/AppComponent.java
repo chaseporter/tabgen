@@ -1,5 +1,9 @@
 package com.chaseporter.tabgen;
 
+import com.chaseporter.tabgen.models.AppState;
+import com.chaseporter.tabgen.models.Recorder;
+import com.chaseporter.tabgen.models.RecordingFiles;
+
 import javax.inject.Singleton;
 
 import dagger.Component;

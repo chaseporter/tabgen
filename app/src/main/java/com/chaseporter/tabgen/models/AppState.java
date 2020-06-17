@@ -1,10 +1,12 @@
-package com.chaseporter.tabgen;
+package com.chaseporter.tabgen.models;
 
 import android.util.Log;
 
 import androidx.annotation.IntDef;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
+import com.chaseporter.tabgen.BR;
 
 import java.lang.annotation.Retention;
 
