@@ -1,4 +1,4 @@
-package com.example.tabgen;
+package com.chaseporter.tabgen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.tabgen.databinding.ActivityMainBinding;
+import com.chaseporter.tabgen.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;

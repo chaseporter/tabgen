@@ -4,9 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="state" type="com.example.tabgen.AppState"/>
+            name="state" type="com.chaseporter.tabgen.AppState"/>
         <variable
-            name="recorder" type="com.example.tabgen.Recorder"/>
+            name="recorder" type="com.chaseporter.tabgen.Recorder"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
