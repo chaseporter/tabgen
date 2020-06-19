@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,7 @@ import javax.inject.Inject;
  * record/stop button and a listView to show recordings. Later on, as features expand out, will need
  * to add more Fragments for tasks that involve signal processing.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecordingAdapter.OnEditRecordingListener {
     private static final String TAG = "MainActivity";
     @Inject
     AppState appState;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerviewer.");
         RecyclerView recyclerView = findViewById(R.id.recordingList);
-        RecordingAdapter recordingAdapter = new RecordingAdapter(this, recordingFiles.getRecordingList());
+        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles.getRecordingList(), this);
         recyclerView.setAdapter(recordingAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -73,5 +74,11 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onEditRecordingClick(int position) {
+        Intent intent = new Intent(this, EditRecordingActivity.class);
+        startActivity(intent);
     }
 }
