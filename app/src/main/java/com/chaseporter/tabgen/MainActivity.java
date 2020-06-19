@@ -2,15 +2,19 @@ package com.chaseporter.tabgen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.chaseporter.tabgen.models.AppState;
 import com.chaseporter.tabgen.models.Recorder;
 import com.chaseporter.tabgen.databinding.ActivityMainBinding;
+import com.chaseporter.tabgen.models.RecordingFiles;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
@@ -26,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     AppState appState;
     @Inject
     Recorder recorder;
+    @Inject
+    RecordingFiles recordingFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView: init recyclerviewer.");
+        RecyclerView recyclerView = findViewById(R.id.recordingList);
+        RecordingAdapter recordingAdapter = new RecordingAdapter(this, recordingFiles.getRecordingList());
+        recyclerView.setAdapter(recordingAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /* Function to check permissions and ask for them if needed. Needs RECORD_AUDIO and WRITE_EXTERNAL_STORAGE permission */

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.databinding.ObservableArrayList;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -14,7 +15,7 @@ import javax.inject.Inject;
  */
 public class RecordingFiles {
     private static final String TAG = "RecordingFiles";
-    public ObservableArrayList<String> recordingList = new ObservableArrayList<>();
+    public ArrayList<String> recordingList = new ArrayList<>();
     private String sourceDirectory;
 
     @Inject
@@ -28,5 +29,8 @@ public class RecordingFiles {
             recordingList.add(recordingFile.getName());
             Log.d(TAG, "RecordingFiles: " + recordingFile.getName());
         }
+    }
+    public ArrayList<String> getRecordingList() {
+        return this.recordingList;
     }
 }
