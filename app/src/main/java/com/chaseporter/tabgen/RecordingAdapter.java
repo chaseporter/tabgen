@@ -1,26 +1,32 @@
 package com.chaseporter.tabgen;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chaseporter.tabgen.models.RecordingFiles;
+
 import java.util.ArrayList;
 
+/**
+ * This is the Adapter for the RecyclerView that shows the Recordings made so far.
+ */
 public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.RecordingViewHolder> {
     private static final String TAG = "RecordingAdapter";
     private ArrayList<String> recordingList;
-    private Context context;
+    private RecordingFiles recordingFiles;
     private OnEditRecordingListener onEditRecordingListener;
 
-    public RecordingAdapter(ArrayList<String> recordingList, OnEditRecordingListener onEditRecordingListener) {
-        this.recordingList = recordingList;
+    public RecordingAdapter(RecordingFiles recordingFiles, OnEditRecordingListener onEditRecordingListener) {
+        this.recordingFiles = recordingFiles;
+        this.recordingList = recordingFiles.getRecordingList();
         this.onEditRecordingListener = onEditRecordingListener;
     }
 
@@ -46,21 +52,33 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.Reco
 
     public class RecordingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
          TextView recordingName;
+         Button editButton;
+         Button deleteButton;
          ConstraintLayout listItemLayout;
          OnEditRecordingListener onEditRecordingListener;
 
          public RecordingViewHolder(@NonNull View itemView, OnEditRecordingListener onEditRecordingListener) {
              super(itemView);
              recordingName = itemView.findViewById(R.id.recordingTitle);
+             editButton = itemView.findViewById(R.id.editButton);
+             deleteButton = itemView.findViewById(R.id.deleteButton);
              listItemLayout = itemView.findViewById(R.id.list_itemLayout);
              this.onEditRecordingListener = onEditRecordingListener;
-             itemView.setOnClickListener(this);
+             editButton.setOnClickListener(this);
+             deleteButton.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     if (recordingFiles.deleteFile(getAdapterPosition())) notifyDataSetChanged();
+                 }
+             });
          }
 
-        @Override
-        public void onClick(View v) {
-            onEditRecordingListener.onEditRecordingClick(getAdapterPosition());
-        }
+         /* This method will call the onEditRecordingListener passed from the MainActivity to open a new Activity
+         * to signal process recordings. */
+         @Override
+         public void onClick(View v) {
+             onEditRecordingListener.onEditRecordingClick(getAdapterPosition());
+         }
     }
 
     public interface OnEditRecordingListener {

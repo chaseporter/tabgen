@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements RecordingAdapter.
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerviewer.");
         RecyclerView recyclerView = findViewById(R.id.recordingList);
-        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles.getRecordingList(), this);
+        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles, this);
         recyclerView.setAdapter(recordingAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -76,8 +76,11 @@ public class MainActivity extends AppCompatActivity implements RecordingAdapter.
         return true;
     }
 
+    /* Main Activity implements the interface OnEditRecordingListener so that this method can be provided to the adapter.
+    * When the EditRecording button is clicked, this method will be called which will open a new Activity. */
     @Override
     public void onEditRecordingClick(int position) {
+        recordingFiles.setEditing(position);
         Intent intent = new Intent(this, EditRecordingActivity.class);
         startActivity(intent);
     }

@@ -3,8 +3,6 @@ package com.chaseporter.tabgen.models;
 
 import android.util.Log;
 
-import androidx.databinding.ObservableArrayList;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -32,5 +30,26 @@ public class RecordingFiles {
     }
     public ArrayList<String> getRecordingList() {
         return this.recordingList;
+    }
+
+
+    /** Method to delete a recording and remove it from the recordingList
+     * @param position - position of file in recordingList to be removed
+     * @return boolean indicating whether the file was successfully deleted
+     */
+    public boolean deleteFile(int position) {
+        Log.d(TAG, "deleteFile: " + recordingList.get(position));
+        String filePath = sourceDirectory + File.separator + recordingList.get(position);
+        File fileToDelete = new File(filePath);
+        boolean deleted = fileToDelete.delete();
+        if (deleted) recordingList.remove(position);
+        return deleted;
+    }
+
+
+    /** Function to set file currently being edited.
+     * @param position - position of file being edited in recordingList
+     */
+    public void setEditing(int position) {
     }
 }
