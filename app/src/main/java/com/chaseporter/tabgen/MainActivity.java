@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements RecordingAdapter.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule(getExternalFilesDir(null).getAbsolutePath())).build();
         MainApplication application = (MainApplication) getApplication();
         AppComponent appComponent = application.getAppComponent();
         appComponent.inject(this);

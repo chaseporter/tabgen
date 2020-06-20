@@ -54,11 +54,21 @@ public class RecordingFiles extends BaseObservable {
         }
     }
 
+    /** Method to add a recording to recordingList
+     *
+     * @param recordingName - recording to add to recordingList
+     */
+    public void addRecording(String recordingName) {
+        Log.d(TAG, "addRecording: " + recordingName);
+        recordingList.add(0, recordingName);
+        if (selectedFileIndex > -1) selectedFileIndex += 1;
+        notifyPropertyChanged(BR.recordingFiles);
+    }
 
     /** Method to delete a recording and remove it from the recordingList
      * @param position - position of file in recordingList to be removed
      */
-    public void deleteFile(int position) {
+    public void deleteRecording(int position) {
         Log.d(TAG, "deleteFile: " + recordingList.get(position));
         String filePath = sourceDirectory + File.separator + recordingList.get(position);
         File fileToDelete = new File(filePath);
@@ -74,7 +84,7 @@ public class RecordingFiles extends BaseObservable {
     /** Function to set file currently being edited.
      * @param position - position of file being edited in recordingList
      */
-    public void selectFile(int position) {
+    public void selectRecording(int position) {
         if (selectedFileIndex == position) {
             selectedFileIndex = -1;
         } else {
@@ -83,8 +93,8 @@ public class RecordingFiles extends BaseObservable {
         notifyPropertyChanged(BR.recordingFiles);
     }
 
-    public int getSelectedFile() {
+    public int getSelectedRecordingIndex() {
         return selectedFileIndex;
     }
-    public String getSelectedFileName() {return recordingList.get(selectedFileIndex);}
+    public String getSelectedRecordingName() {return recordingList.get(selectedFileIndex);}
 }

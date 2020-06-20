@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:enabled="@{state.ready}"
-                android:onClick="@{() -> recordingFiles.deleteFile(index)}"
+                android:onClick="@{() -> recordingFiles.deleteRecording(index)}"
                 android:text="Delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
