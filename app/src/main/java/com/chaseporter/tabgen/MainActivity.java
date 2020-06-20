@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements RecordingAdapter.
     * When the EditRecording button is clicked, this method will be called which will open a new Activity. */
     @Override
     public void onEditRecordingClick(int position) {
-        recordingFiles.setEditing(position);
+        Log.d(TAG, "onEditRecordingClick: clicked " + position);
         Intent intent = new Intent(this, EditRecordingActivity.class);
         startActivity(intent);
     }

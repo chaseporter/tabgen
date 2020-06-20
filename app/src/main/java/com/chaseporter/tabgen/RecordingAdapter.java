@@ -64,7 +64,8 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.Reco
         holder.recordingName.setText(recordingList.get(position));
         holder.binding.setIndex(position);
         holder.binding.setState(appState);
-        holder.binding.setRecordingFiles(recordingFiles);
+        holder.bindRecordingFiles(recordingFiles);
+        holder.bindListener();
     }
 
     @Override
@@ -75,29 +76,33 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.Reco
     public class RecordingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
          RecordingListitemBinding binding;
          TextView recordingName;
-         Button editButton;
-         Button deleteButton;
-         Button playButton;
+         View expandedView;
          OnEditRecordingListener onEditRecordingListener;
 
-         public RecordingViewHolder(@NonNull RecordingListitemBinding binding, OnEditRecordingListener onEditRecordingListener) {
+         public RecordingViewHolder(@NonNull RecordingListitemBinding binding, final OnEditRecordingListener onEditRecordingListener) {
              super(binding.getRoot());
              this.binding = binding;
+             binding.getRoot().setOnClickListener(this);
              recordingName = itemView.findViewById(R.id.recordingTitle);
-             playButton = itemView.findViewById(R.id.playButton);
-             editButton = itemView.findViewById(R.id.editButton);
-             deleteButton = itemView.findViewById(R.id.deleteButton);
+             expandedView = itemView.findViewById(R.id.expandedListItem);
              this.onEditRecordingListener = onEditRecordingListener;
-             editButton.setOnClickListener(this);
          }
 
-         /* This method will call the onEditRecordingListener passed from the MainActivity to open a new Activity
-         * to signal process recordings. Eventually would like to remove the buttons from the default list item view
-         * and use this method to inflate a new view when an element is clicked that has the three buttons for playing,
-         * editing, and deleting recordings. */
+         /* This will select this file to expand its view. */
          @Override
          public void onClick(View v) {
-             onEditRecordingListener.onEditRecordingClick(getAdapterPosition());
+             recordingFiles.selectFile(getAdapterPosition());
+             notifyDataSetChanged();
+         }
+
+         private void bindRecordingFiles(RecordingFiles recordingFiles) {
+             binding.setRecordingFiles(recordingFiles);
+             boolean expanded = recordingFiles.getSelectedFile() == getAdapterPosition();
+             expandedView.setVisibility(expanded ? View.VISIBLE : View.GONE);
+         }
+
+         private void bindListener() {
+             binding.setListener(this.onEditRecordingListener);
          }
     }
 
