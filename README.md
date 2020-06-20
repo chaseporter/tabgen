@@ -29,6 +29,8 @@ change recording format to a WAV file, implement a FFT with NDK to do signal pro
 
 Build C++ executables to be run on when clicking FFT button in EditRecordingActivity.
 
+Would like to be able to pause and resume recordings. currently only have ability to stop and play from the beginning.  
+Would like to be able to rename files 
 For file organization would like an option to start new projects where all recordings belonging to a certain project would exist. 
 
 ## Wish List ##
