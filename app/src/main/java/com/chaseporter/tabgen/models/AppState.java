@@ -27,11 +27,12 @@ public class AppState extends BaseObservable {
 
     /* Using IntDef rather then enum because of the memory advantages of IntDef over enums */
     @Retention(CLASS)
-    @IntDef({READY, RECORDING, PLAYING})
+    @IntDef({READY, RECORDING, PLAYING, EDITING})
     @interface State {}
     static final int READY = 0;
     static final int RECORDING = 1;
     static final int PLAYING = 2;
+    static final int EDITING = 3;
 
     @State
     private int appState = READY;
@@ -52,7 +53,7 @@ public class AppState extends BaseObservable {
      * at the same time.
      * @throws IllegalStateException - Error defines state expectations.
      */
-    synchronized void setRecording() throws IllegalStateException {
+    public synchronized void setRecording() throws IllegalStateException {
         if (appState != READY) {
             throw new IllegalStateException("App must be READY to set its state to RECORDING");
         }
@@ -60,7 +61,7 @@ public class AppState extends BaseObservable {
         Log.d(TAG, "Set state to RECORDING");
     }
 
-    synchronized void setReady() throws IllegalStateException {
+    public synchronized void setReady() throws IllegalStateException {
         if (appState != RECORDING && appState != PLAYING) {
             throw new IllegalStateException("App must be RECORDING or PLAYING to set its state to READY");
         }
@@ -68,12 +69,20 @@ public class AppState extends BaseObservable {
         Log.d(TAG, "Set state to READY");
     }
 
-    synchronized  void setPlaying() throws IllegalStateException {
+    public synchronized void setPlaying() throws IllegalStateException {
         if (appState != READY) {
             throw new IllegalStateException("App must be READY to set its state to PLAYING");
         }
         setState(PLAYING);
         Log.d(TAG, "Set state to PLAYING");
+    }
+    
+    public synchronized void setEditing() throws IllegalStateException {
+        if (appState != READY) {
+            throw new IllegalStateException("App must be READY to set its state to EDITING");
+        }
+        setState(EDITING);
+        Log.d(TAG, "Set state to EDITING");
     }
 
     @Bindable
@@ -86,6 +95,7 @@ public class AppState extends BaseObservable {
             case READY: return "Ready";
             case RECORDING: return "Recording";
             case PLAYING: return "Playing";
+            case EDITING: return "Editing";
             default: return "";
         }
     }

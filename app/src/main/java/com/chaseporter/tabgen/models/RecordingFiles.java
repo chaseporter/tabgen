@@ -21,7 +21,7 @@ public class RecordingFiles extends BaseObservable {
     public ArrayList<String> recordingList = new ArrayList<>();
     private String sourceDirectory;
     private AppState appState;
-    private int selectedFile = -1;
+    private int selectedFileIndex = -1;
 
     @Inject
     public RecordingFiles(String sourceDirectory, AppState appState) {
@@ -65,7 +65,7 @@ public class RecordingFiles extends BaseObservable {
         boolean deleted = fileToDelete.delete();
         if (deleted) {
             recordingList.remove(position);
-            selectedFile = -1;
+            selectedFileIndex = -1;
             notifyPropertyChanged(BR.recordingFiles);
         }
     }
@@ -75,15 +75,16 @@ public class RecordingFiles extends BaseObservable {
      * @param position - position of file being edited in recordingList
      */
     public void selectFile(int position) {
-        if (selectedFile == position) {
-            selectedFile = -1;
+        if (selectedFileIndex == position) {
+            selectedFileIndex = -1;
         } else {
-            selectedFile = position;
+            selectedFileIndex = position;
         }
         notifyPropertyChanged(BR.recordingFiles);
     }
 
     public int getSelectedFile() {
-        return selectedFile;
+        return selectedFileIndex;
     }
+    public String getSelectedFileName() {return recordingList.get(selectedFileIndex);}
 }
