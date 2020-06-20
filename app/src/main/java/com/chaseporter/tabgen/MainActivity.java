@@ -1,14 +1,21 @@
-package com.example.tabgen;
+package com.chaseporter.tabgen;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import com.example.tabgen.databinding.ActivityMainBinding;
+import com.chaseporter.tabgen.models.AppState;
+import com.chaseporter.tabgen.models.Recorder;
+import com.chaseporter.tabgen.databinding.ActivityMainBinding;
+import com.chaseporter.tabgen.models.RecordingFiles;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
@@ -18,17 +25,21 @@ import javax.inject.Inject;
  * record/stop button and a listView to show recordings. Later on, as features expand out, will need
  * to add more Fragments for tasks that involve signal processing.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecordingAdapter.OnEditRecordingListener {
     private static final String TAG = "MainActivity";
     @Inject
     AppState appState;
     @Inject
     Recorder recorder;
+    @Inject
+    RecordingFiles recordingFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AppComponent appComponent = DaggerAppComponent.builder().appModule(new AppModule(getExternalFilesDir(null).getAbsolutePath())).build();
+        MainApplication application = (MainApplication) getApplication();
+        AppComponent appComponent = application.getAppComponent();
         appComponent.inject(this);
+
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setState(appState);
         binding.setRecorder(recorder);
@@ -46,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView: init recyclerviewer.");
+        RecyclerView recyclerView = findViewById(R.id.recordingList);
+        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles, appState, this);
+        recyclerView.setAdapter(recordingAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /* Function to check permissions and ask for them if needed. Needs RECORD_AUDIO and WRITE_EXTERNAL_STORAGE permission */
@@ -56,5 +76,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    /* Main Activity implements the interface OnEditRecordingListener so that this method can be provided to the adapter.
+    * When the EditRecording button is clicked, this method will be called which will open a new Activity. */
+    @Override
+    public void onEditRecordingClick(int position) {
+        Log.d(TAG, "onEditRecordingClick: clicked " + position);
+        Intent intent = new Intent(this, EditRecordingActivity.class);
+        startActivity(intent);
     }
 }

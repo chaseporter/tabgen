@@ -1,4 +1,10 @@
-package com.example.tabgen;
+package com.chaseporter.tabgen;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.chaseporter.tabgen.models.AppState;
+import com.chaseporter.tabgen.models.Recorder;
+import com.chaseporter.tabgen.models.RecordingFiles;
 
 import javax.inject.Singleton;
 
@@ -15,5 +21,6 @@ public interface AppComponent {
     RecordingFiles getRecordingFiles();
 
     void inject(MainActivity mainActivity);
+    void inject(EditRecordingActivity editRecordingActivity);
 
 }

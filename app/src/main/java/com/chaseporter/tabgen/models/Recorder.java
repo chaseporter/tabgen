@@ -1,4 +1,4 @@
-package com.example.tabgen;
+package com.chaseporter.tabgen.models;
 
 import android.media.MediaRecorder;
 import android.util.Log;
@@ -20,6 +20,7 @@ public class Recorder {
     private static final String TAG = "Recorder";
     private AppState appState;
     private String storageDirectory;
+    private String currentRecordingName;
     private RecordingFiles recordingFiles;
     private MediaRecorder mediaRecorder;
 
@@ -33,10 +34,10 @@ public class Recorder {
     /* Function called to start a recording. Sets AppState to STARTING, initializes MediaRecorder
     * starts recording, and sets AppState to RECORDING. */
     public void startRecording() {
-        appState.setStarting();
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmss");
         String timeStamp = s.format(new Date());
-        String filePath = storageDirectory + File.separator + timeStamp + ".3gp";
+        currentRecordingName = timeStamp + ".3gp";
+        String filePath = storageDirectory + File.separator + currentRecordingName;
         Log.d(TAG, "startRecording: recording to " + filePath);
 
         mediaRecorder = new MediaRecorder();
@@ -56,12 +57,12 @@ public class Recorder {
     /* Function to stop recording. Sets AppState to STOPPING, stops recording, saves audio file and
     * sets AppState to READY */
     public void stopRecording() {
-        appState.setStopping();
         if (mediaRecorder != null) {
             mediaRecorder.stop();
             mediaRecorder.release();
             mediaRecorder = null;
         }
+        recordingFiles.addRecording(currentRecordingName);
         appState.setReady();
     }
 }
