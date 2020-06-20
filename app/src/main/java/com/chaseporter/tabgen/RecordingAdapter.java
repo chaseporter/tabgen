@@ -92,7 +92,6 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.Reco
          @Override
          public void onClick(View v) {
              recordingFiles.selectFile(getAdapterPosition());
-             notifyDataSetChanged();
          }
 
          private void bindRecordingFiles(RecordingFiles recordingFiles) {

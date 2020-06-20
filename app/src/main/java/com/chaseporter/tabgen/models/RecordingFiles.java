@@ -80,6 +80,7 @@ public class RecordingFiles extends BaseObservable {
         } else {
             selectedFile = position;
         }
+        notifyPropertyChanged(BR.recordingFiles);
     }
 
     public int getSelectedFile() {
