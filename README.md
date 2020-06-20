@@ -24,6 +24,8 @@ This interface is implemented from the MainActivity where it creates the intent 
 ## Future Feature List ##
 change recording format to a WAV file, implement a FFT with NDK to do signal processing in C++.   
 
+Build C++ executables to be run on when clicking FFT button in EditRecordingActivity.
+
 For file organization would like an option to start new projects where all recordings belonging to a certain project would exist. 
 
 ## Wish List ##
