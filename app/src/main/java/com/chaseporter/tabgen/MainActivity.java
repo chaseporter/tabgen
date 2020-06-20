@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements RecordingAdapter.
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerviewer.");
         RecyclerView recyclerView = findViewById(R.id.recordingList);
-        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles, this);
+        RecordingAdapter recordingAdapter = new RecordingAdapter(recordingFiles, appState, this);
         recyclerView.setAdapter(recordingAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

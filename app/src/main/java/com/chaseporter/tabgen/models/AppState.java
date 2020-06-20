@@ -27,19 +27,18 @@ public class AppState extends BaseObservable {
 
     /* Using IntDef rather then enum because of the memory advantages of IntDef over enums */
     @Retention(CLASS)
-    @IntDef({READY, STARTING, RECORDING, STOPPING, PLAYING})
+    @IntDef({READY, RECORDING, PLAYING})
     @interface State {}
     static final int READY = 0;
-    static final int STARTING = 1;
-    static final int RECORDING = 2;
-    static final int STOPPING = 3;
-    static final int PLAYING = 4;
+    static final int RECORDING = 1;
+    static final int PLAYING = 2;
 
     @State
     private int appState = READY;
 
     @Inject
     AppState() {
+        Log.d(TAG, "AppState: Created");
     }
 
     synchronized private void setState(@State int mode) {
@@ -51,41 +50,24 @@ public class AppState extends BaseObservable {
      * The following set Functions define the possible state flows as to prevent the App from being
      * able to reach illegal states. For example, should not be able to record and play a recording
      * at the same time.
-     * @throws IllegalStateException
+     * @throws IllegalStateException - Error defines state expectations.
      */
     synchronized void setRecording() throws IllegalStateException {
-        if (appState != STARTING) {
-            throw new IllegalStateException("App must be STARTING to set its state to RECORDING");
+        if (appState != READY) {
+            throw new IllegalStateException("App must be READY to set its state to RECORDING");
         }
         setState(RECORDING);
         Log.d(TAG, "Set state to RECORDING");
     }
 
-    synchronized void setStarting() throws IllegalStateException {
-        if (appState != READY) {
-            throw new IllegalStateException("App must be READY to set its state to STARTING");
-        }
-        setState(STARTING);
-        Log.d(TAG, "Set state to STARTING");
-
-    }
-
     synchronized void setReady() throws IllegalStateException {
-        if (appState != STOPPING) {
-            throw new IllegalStateException("App must be RECORDING to set its state to READY");
+        if (appState != RECORDING && appState != PLAYING) {
+            throw new IllegalStateException("App must be RECORDING or PLAYING to set its state to READY");
         }
         setState(READY);
         Log.d(TAG, "Set state to READY");
     }
 
-    synchronized void setStopping() throws IllegalStateException {
-        if (appState != RECORDING) {
-            throw new IllegalStateException("App must be RECORDING to set its state to READY");
-        }
-        setState(STOPPING);
-        Log.d(TAG, "Set state to STOPPING");
-    }
-    
     synchronized  void setPlaying() throws IllegalStateException {
         if (appState != READY) {
             throw new IllegalStateException("App must be READY to set its state to PLAYING");
@@ -102,9 +84,7 @@ public class AppState extends BaseObservable {
     @Bindable public String getCurrentState() {
         switch (appState) {
             case READY: return "Ready";
-            case STARTING: return "Starting";
             case RECORDING: return "Recording";
-            case STOPPING: return "Stopping";
             case PLAYING: return "Playing";
             default: return "";
         }
@@ -119,5 +99,8 @@ public class AppState extends BaseObservable {
     public boolean isReady() {
         return appState == READY;
     }
+
+    @Bindable
+    public boolean isPlaying() { return appState == PLAYING; }
 }
 
