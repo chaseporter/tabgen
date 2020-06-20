@@ -45,7 +45,7 @@ public class RecordingAdapter extends RecyclerView.Adapter<RecordingAdapter.Reco
         appState.addOnPropertyChangedCallback(callback);
     }
 
-    /* Would like to databind here so i can bind the appstate to the views and make sure that the buttons are disabled
+    /* Implented databind here so I can bind the AppState to the views and make sure that the buttons are disabled
      * when the app is not in READY state. Could also bind the recordingFiles and use the xml for click events rather than
      * making onClickListeners.
      */
