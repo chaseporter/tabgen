@@ -1,11 +1,13 @@
 package com.chaseporter.tabgen.models;
 
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ public class RecordingFiles extends BaseObservable {
     private String sourceDirectory;
     private AppState appState;
     private int selectedFileIndex = -1;
+    private MediaPlayer mediaPlayer;
 
     @Inject
     public RecordingFiles(String sourceDirectory, AppState appState) {
@@ -48,8 +51,19 @@ public class RecordingFiles extends BaseObservable {
         if (appState.isReady()) {
             Log.d(TAG, "playStop: playing " + recordingList.get(position));
             appState.setPlaying();
+            mediaPlayer = new MediaPlayer();
+            String fileName = sourceDirectory + File.separator + getSelectedRecordingName();
+            try {
+                mediaPlayer.setDataSource(fileName);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            } catch (IOException e) {
+                Log.e(TAG, "prepare() failed");
+            }
         } else {
             Log.d(TAG, "playStop: stopping " + recordingList.get(position));
+            mediaPlayer.release();
+            mediaPlayer = null;
             appState.setReady();
         }
     }
