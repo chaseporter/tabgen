@@ -1,8 +1,11 @@
 # Purpose #
 
-This is an Android Application to record guitar playing and generate tablature based on the recording. Current functionality is a single button that starts and stops recordings and saves them to the Apps Data directory.
+This is an Android Application to record guitar playing and generate tablature based on the recording. 
 
-A RecyclerView holds the recordings and shows them to the user on the MainActivity. When user selects a list item, the item expands to show three buttons: Play, Edit, Delete. From here, each recording can be chosen to be played, which sets the AppState to playing which in turn makes recording, editing, and deleting impossible and also changes the play button to a stop button. The recording can also be chosen to be edited, which sets the AppState to EDITING and opens a new activity which will be used to run signal processing code on recordings, or deleted, which will delete the audio file and remove it from the RecyclerView.
+## Current functionality ##
+On the MainAcitivity is a single button that starts and stops recordings and saves them to the Apps Data directory.
+
+A RecyclerView holds the recordings and shows them to the user on the MainActivity. When user selects a list item, the item expands to show three buttons: Play, Edit, Delete. These buttons are only enabled if the App is in a READY state, meaning they are inactive during a recording session or while a recording is being played. From here, each recording can be chosen to be played, which sets the AppState to playing which in turn makes recording, editing, and deleting impossible and also changes the play button to a stop button. The recording can also be chosen to be edited which opens a new activity which will be used later to run signal processing code on recordings. The recording could also be selected to be deleted, which will delete the audio file and remove it from the RecyclerView.
 
 ## Implementation details ## 
 State is managed with a Singleton AppState that is injected with Dagger wherever needed. This insures all models and views
